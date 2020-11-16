@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "851865113226",
+    "firebase_url": "https://roadsideassistance-6a172.firebaseio.com",
+    "project_id": "roadsideassistance-6a172",
+    "storage_bucket": "roadsideassistance-6a172.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851865113226:android:5ebbdd3d7420c9e37f5373",
+        "android_client_info": {
+          "package_name": "com.tafariBeckford.RoadSideAssistance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851865113226-1tmjk9gmruhpq9ff4r2rqrnbjbhnlami.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_9uHvxOwEzcHmOwsHh4et3I1QUTTdv1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851865113226-1tmjk9gmruhpq9ff4r2rqrnbjbhnlami.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
