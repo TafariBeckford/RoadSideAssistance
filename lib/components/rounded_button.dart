@@ -3,12 +3,12 @@ import 'package:RoadSideAssistance/constants.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
-  final Function press;
+  final Function Onpressed;
   final Color color, textColor;
   const RoundedButton({
     Key key,
     this.text,
-    this.press,
+    this.Onpressed,
     this.color = kPrimaryColor,
     this.textColor = Colors.white,
   }) : super(key: key);
@@ -24,7 +24,7 @@ class RoundedButton extends StatelessWidget {
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           color: color,
-          onPressed: press,
+          onPressed: Onpressed,
           child: Text(
             text,
             style: TextStyle(color: textColor),

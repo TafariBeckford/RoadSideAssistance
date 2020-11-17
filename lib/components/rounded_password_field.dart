@@ -3,9 +3,11 @@ import 'package:RoadSideAssistance/components/text_field_container.dart';
 import 'package:RoadSideAssistance/constants.dart';
 
 class RoundedPasswordField extends StatelessWidget {
-  final ValueChanged<String> onChanged;
+  final Function onChanged;
+  final Function validator;
   const RoundedPasswordField({
     Key key,
+    this.validator,
     this.onChanged,
   }) : super(key: key);
 

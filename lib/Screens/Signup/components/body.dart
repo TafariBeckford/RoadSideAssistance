@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/Screens/Signup/components/background.dart';
 import 'package:RoadSideAssistance/Screens/Signup/components/or_divider.dart';
@@ -8,8 +8,12 @@ import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Body extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,20 +31,34 @@ class Body extends StatelessWidget {
               "assets/icons/signup.svg",
               height: size.height * 0.35,
             ),
-            RoundedInputField(
+            /* RoundedInputField(
               hintText: "Your FullName",
               onChanged: (value) {},
-            ),
+            ), */
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                email = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                password = value;
+              },
             ),
             RoundedButton(
               text: "SIGNUP",
-              press: () {},
+              Onpressed: () async {
+                try {
+                  final NewUser = await _auth.createUserWithEmailAndPassword(
+                      email: email, password: password);
+                  if (NewUser != null) {
+                    Navigator.pushNamed(context, 'login_screen');
+                  }
+                } catch (e) {
+                  print(e);
+                }
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
@@ -80,3 +98,4 @@ class Body extends StatelessWidget {
     );
   }
 }
+ */
