@@ -10,6 +10,7 @@ import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'signup_screen.dart';
@@ -23,6 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
   String email;
   String password;
+  String fullname;
   bool showSpinner = false;
   @override
   Widget build(BuildContext context) {
@@ -44,10 +46,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 "assets/icons/signup.svg",
                 height: size.height * 0.35,
               ),
-              /* RoundedInputField(
-                    hintText: "Your FullName",
-                    onChanged: (value) {},
-                  ), */
+              RoundedInputField(
+                hintText: "Your FullName",
+                onChanged: (value) {
+                  fullname = value;
+                },
+              ),
               RoundedInputField(
                 validator: (input) {
                   if (input.isEmpty) {
@@ -78,10 +82,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   } else {
                     print('Form is invalid');
                   }
-
                   try {
                     final NewUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
+                    User user = NewUser.user;
+                    await Data(uid: user.uid).userData(fullname);
                     if (NewUser != null) {
                       Navigator.pushReplacement(
                           context,
@@ -130,5 +135,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     ));
+  }
+}
+
+class Data {
+  final String uid;
+  Data({this.uid});
+  final CollectionReference UserCollection =
+      FirebaseFirestore.instance.collection('users');
+  Future userData(String fullname) async {
+    return await UserCollection.doc(uid).set({'fullname': fullname});
   }
 }
