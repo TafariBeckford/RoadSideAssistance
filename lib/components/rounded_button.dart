@@ -3,11 +3,13 @@ import 'package:RoadSideAssistance/constants.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
+  // ignore: non_constant_identifier_names
   final Function Onpressed;
   final Color color, textColor;
   const RoundedButton({
     Key key,
     this.text,
+    // ignore: non_constant_identifier_names
     this.Onpressed,
     this.color = kPrimaryColor,
     this.textColor = Colors.white,

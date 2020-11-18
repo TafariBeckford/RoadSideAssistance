@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/Screens/Signup/components/background.dart';
@@ -9,7 +10,6 @@ import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -25,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String email;
   String password;
   String fullname;
+  String role;
   bool showSpinner = false;
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: size.height * 0.35,
               ),
               RoundedInputField(
-                hintText: "Your FullName",
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Provide your full name';
+                  }
+                },
+                hintText: "Your Full Name",
                 onChanged: (value) {
                   fullname = value;
                 },
@@ -73,6 +79,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   password = value;
                 },
               ),
+              Container(
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      labelText: 'Select Role',
+                      icon: Icon(
+                        Icons.person_pin_circle,
+                        color: kPrimaryColor,
+                      )),
+                  value: role,
+                  items: ["Customer", "Service Provider"]
+                      .map((label) => DropdownMenuItem(
+                            child: Text(label),
+                            value: label,
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() => role = value);
+                  },
+                ),
+              ),
               RoundedButton(
                 text: "SIGNUP",
                 Onpressed: () async {
@@ -83,10 +109,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     print('Form is invalid');
                   }
                   try {
+                    // ignore: non_constant_identifier_names
                     final NewUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     User user = NewUser.user;
-                    await Data(uid: user.uid).userData(fullname);
+                    await Data(uid: user.uid).userData(fullname, role);
                     if (NewUser != null) {
                       Navigator.pushReplacement(
                           context,
@@ -141,9 +168,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 class Data {
   final String uid;
   Data({this.uid});
+  // ignore: non_constant_identifier_names
   final CollectionReference UserCollection =
       FirebaseFirestore.instance.collection('users');
-  Future userData(String fullname) async {
-    return await UserCollection.doc(uid).set({'fullname': fullname});
+  Future userData(String fullname, String role) async {
+    return await UserCollection.doc(uid)
+        .set({'fullname': fullname, 'role': role});
   }
 }
