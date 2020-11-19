@@ -1,3 +1,5 @@
+import 'package:RoadSideAssistance/Screens/Dashboard/customer_dashboard.dart';
+import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/Screens/Signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:RoadSideAssistance/constants.dart';
@@ -15,12 +17,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Auth',
-      theme: ThemeData(
-        primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: Colors.white,
+      title: 'RoadSide Assistance',
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Color(0xFF0A0E21),
+        scaffoldBackgroundColor: Color(0xFF0A0E21),
       ),
-      home: SignUpScreen(),
+      home: LoginScreen(),
     );
   }
 }
