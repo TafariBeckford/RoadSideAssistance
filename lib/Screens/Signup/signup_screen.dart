@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/components/text_field_container.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
@@ -43,10 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: size.height * 0.03),
-              SvgPicture.asset(
-                "assets/icons/signup.svg",
+              /*  SvgPicture.asset(
+                "assets/icons/",
                 height: size.height * 0.35,
-              ),
+              ), */
               RoundedInputField(
                 validator: (input) {
                   if (input.isEmpty) {
@@ -79,13 +80,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   password = value;
                 },
               ),
-              Container(
+              TextFieldContainer(
                 child: DropdownButtonFormField<String>(
                   decoration: InputDecoration(
                       labelText: 'Select Role',
                       icon: Icon(
                         Icons.person_pin_circle,
-                        color: kPrimaryColor,
+                        color: kActiveCardColour,
                       )),
                   value: role,
                   items: ["Customer", "Service Provider"]
@@ -139,7 +140,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   );
                 },
               ),
-              OrDivider(),
+              /*  OrDivider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -156,7 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     press: () {},
                   ),
                 ],
-              )
+              ) */
             ],
           ),
         ),

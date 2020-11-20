@@ -11,8 +11,8 @@ class RoundedButton extends StatelessWidget {
     this.text,
     // ignore: non_constant_identifier_names
     this.Onpressed,
-    this.color = kPrimaryColor,
-    this.textColor = Colors.white,
+    this.color = Colors.white,
+    this.textColor = kActiveCardColour,
   }) : super(key: key);
 
   @override

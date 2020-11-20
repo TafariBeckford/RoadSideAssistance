@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'RoadSide Assistance',
       theme: ThemeData.dark().copyWith(
         primaryColor: kActiveCardColour,
+        hintColor: kActiveCardColour,
         scaffoldBackgroundColor: Color(0xFF0A0E21),
       ),
       home: LoginScreen(),
