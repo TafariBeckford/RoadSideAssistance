@@ -36,7 +36,7 @@ class RoleRouting extends StatelessWidget {
       );
     }
     if (snapshot.data()['role'] == 'Service Provider') {
-      return ServiceProvidorDashboard();
+      return ServiceProviderDashboard();
     } else {
       return CustomerDashboard();
     }
