@@ -1,5 +1,3 @@
-import 'package:RoadSideAssistance/Screens/Dashboard/admin_dash.dart';
-import 'package:RoadSideAssistance/Screens/Dashboard/customer_dashboard.dart';
 import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'RoadSide Assistance',
       theme: ThemeData.dark().copyWith(
+        canvasColor: Colors.white,
         primaryColor: kActiveCardColour,
         hintColor: kActiveCardColour,
         scaffoldBackgroundColor: Color(0xFF0A0E21),

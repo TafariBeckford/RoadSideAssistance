@@ -1,15 +1,11 @@
-import 'package:RoadSideAssistance/components/text_field_container.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/Screens/Signup/components/background.dart';
-import 'package:RoadSideAssistance/Screens/Signup/components/or_divider.dart';
-import 'package:RoadSideAssistance/Screens/Signup/components/social_icon.dart';
 import 'package:RoadSideAssistance/components/already_have_an_account_acheck.dart';
 import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:RoadSideAssistance/components/rounded_password_field.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -27,6 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String password;
   String fullname;
   String role;
+  String gender;
+
   bool showSpinner = false;
   @override
   Widget build(BuildContext context) {
@@ -80,24 +78,78 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   password = value;
                 },
               ),
-              TextFieldContainer(
-                child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: size.width * 0.8,
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.white),
+                    borderRadius: BorderRadius.circular(29.0),
+                  ),
+                  child: DropdownButtonFormField(
+                    icon: Icon(Icons.arrow_drop_down),
+                    decoration: InputDecoration(
                       labelText: 'Select Role',
                       icon: Icon(
                         Icons.person_pin_circle,
                         color: kActiveCardColour,
-                      )),
-                  value: role,
-                  items: ["Customer", "Service Provider"]
-                      .map((label) => DropdownMenuItem(
+                      ),
+                    ),
+                    elevation: 5,
+                    isExpanded: true,
+                    style: TextStyle(color: kActiveCardColour, fontSize: 15.0),
+                    value: role,
+                    items: ["Customer", "Service Provider"]
+                        .map(
+                          (label) => DropdownMenuItem(
                             child: Text(label),
                             value: label,
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() => role = value);
-                  },
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() => role = value);
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: size.width * 0.8,
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.white),
+                    borderRadius: BorderRadius.circular(29.0),
+                  ),
+                  child: DropdownButtonFormField(
+                    icon: Icon(Icons.arrow_drop_down),
+                    decoration: InputDecoration(
+                      labelText: 'Select Gender',
+                      icon: Icon(
+                        Icons.person_pin_circle,
+                        color: kActiveCardColour,
+                      ),
+                    ),
+                    elevation: 5,
+                    isExpanded: true,
+                    style: TextStyle(fontSize: 15.0, color: kActiveCardColour),
+                    value: gender,
+                    items: ["Male", "Female"]
+                        .map(
+                          (label) => DropdownMenuItem(
+                            child: Text(label),
+                            value: label,
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() => gender = value);
+                    },
+                  ),
                 ),
               ),
               RoundedButton(
@@ -114,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     final NewUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     User user = NewUser.user;
-                    await Data(uid: user.uid).userData(fullname, role);
+                    await Data(uid: user.uid).userData(fullname, role, gender);
                     if (NewUser != null) {
                       Navigator.pushReplacement(
                           context,
@@ -172,8 +224,8 @@ class Data {
   // ignore: non_constant_identifier_names
   final CollectionReference UserCollection =
       FirebaseFirestore.instance.collection('users');
-  Future userData(String fullname, String role) async {
+  Future userData(String fullname, String role, String gender) async {
     return await UserCollection.doc(uid)
-        .set({'fullname': fullname, 'role': role});
+        .set({'fullname': fullname, 'role': role, 'gender': gender});
   }
 }

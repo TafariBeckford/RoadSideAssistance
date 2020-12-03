@@ -14,6 +14,7 @@ final topAppBar = AppBar(
 );
 
 //Bottom App Bar
+// ignore: non_constant_identifier_names
 final Bottombar = Container(
   height: 55.0,
   child: BottomAppBar(
