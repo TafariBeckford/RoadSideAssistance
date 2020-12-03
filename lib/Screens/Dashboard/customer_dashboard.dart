@@ -71,7 +71,7 @@ class _OptionGridState extends State<OptionGrid> {
                     colour: kActiveCardColour,
                     cardChild: Tab(
                       icon: Image.asset("assets/icons/flat-tire.png"),
-                      text: 'Flat tire',
+                      text: 'Flat Tyre',
                     ),
                   ),
                 ),
@@ -106,7 +106,7 @@ class _OptionGridState extends State<OptionGrid> {
                   child: ReusableCard(
                     cardChild: Tab(
                       icon: Image.asset("assets/icons/car-battery.png"),
-                      text: 'Battery Dead',
+                      text: 'Dead Battery',
                     ),
                     colour: kActiveCardColour,
                   ),

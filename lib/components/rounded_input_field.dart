@@ -7,9 +7,17 @@ class RoundedInputField extends StatelessWidget {
   final IconData icon;
   final Function onChanged;
   final Function validator;
+  final TextInputType keyboardType;
+  final int maxLines;
+  final bool expands;
+  final List inputFormatters;
   const RoundedInputField({
     Key key,
+    this.expands,
     this.hintText,
+    this.keyboardType,
+    this.maxLines,
+    this.inputFormatters,
     this.icon = Icons.person,
     this.validator,
     this.onChanged,
