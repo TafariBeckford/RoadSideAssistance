@@ -17,7 +17,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
   String email;
   String password;
   @override
@@ -64,21 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 RoundedButton(
                   text: "LOGIN",
-                  Onpressed: () async {
-                    try {
-                      User user = (await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: email, password: password))
-                          .user;
-                      if (user != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RoleRouting(user: user)));
-                      }
-                    } catch (e) {
-                      print(e);
-                    }
+                  Onpressed: () {
+                    formLogin();
                   },
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -100,5 +86,19 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void formLogin() async {
+    try {
+      User user = (await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: email, password: password))
+          .user;
+      if (user != null) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => RoleRouting(user: user)));
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

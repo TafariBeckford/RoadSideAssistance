@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Details extends StatefulWidget {
+class DetailsView extends StatefulWidget {
+  final DocumentSnapshot post;
+
+  DetailsView({this.post});
+
   @override
-  _DetailsState createState() => _DetailsState();
+  _DetailsViewState createState() => _DetailsViewState();
 }
 
-class _DetailsState extends State<Details> {
+class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +55,9 @@ class _DetailsState extends State<Details> {
               padding: EdgeInsets.all(40.0),
               child: Center(
                 child: Column(
-                  children: <Widget>[],
+                  children: <Widget>[
+                    Text(widget.post.data()['address']),
+                  ],
                 ),
               ),
             ),

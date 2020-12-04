@@ -7,7 +7,7 @@ import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:RoadSideAssistance/Model/Data.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'signup_screen.dart';
@@ -154,28 +154,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               RoundedButton(
                 text: "SIGNUP",
-                Onpressed: () async {
-                  final FormState form = _formKey.currentState;
-                  if (form.validate()) {
-                    print('Form is valid');
-                  } else {
-                    print('Form is invalid');
-                  }
-                  try {
-                    // ignore: non_constant_identifier_names
-                    final NewUser = await _auth.createUserWithEmailAndPassword(
-                        email: email, password: password);
-                    User user = NewUser.user;
-                    await Data(uid: user.uid).userData(fullname, role, gender);
-                    if (NewUser != null) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
+                Onpressed: () {
+                  submitForm();
                 },
               ),
               SizedBox(height: size.height * 0.03),
@@ -216,16 +196,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     ));
   }
-}
 
-class Data {
-  final String uid;
-  Data({this.uid});
-  // ignore: non_constant_identifier_names
-  final CollectionReference UserCollection =
-      FirebaseFirestore.instance.collection('users');
-  Future userData(String fullname, String role, String gender) async {
-    return await UserCollection.doc(uid)
-        .set({'fullname': fullname, 'role': role, 'gender': gender});
+  void submitForm() async {
+    final FormState form = _formKey.currentState;
+    if (form.validate()) {
+      print('Form is valid');
+    } else {
+      print('Form is invalid');
+    }
+    try {
+      final newUser = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User user = newUser.user;
+      await Data(uid: user.uid).userData(fullname, role, gender);
+      if (newUser != null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
