@@ -19,6 +19,7 @@ class BusinessForm extends StatefulWidget {
 class _BusinessFormState extends State<BusinessForm> {
   File _image;
   final picker = ImagePicker();
+  final _firestore = FirebaseFirestore.instance;
   DocumentReference sightingRef =
       FirebaseFirestore.instance.collection("serviceprovider").doc();
 
@@ -88,8 +89,6 @@ class _BusinessFormState extends State<BusinessForm> {
   }
 
   @override
-
-  // ignore: override_on_non_overriding_member
   List _myActivities;
   String _myActivitiesResult;
   String parish;
@@ -97,7 +96,7 @@ class _BusinessFormState extends State<BusinessForm> {
   int phoneNumber;
   String address;
 
-  List<String> parishList = [
+  List<String> ParishList = [
     "Kingston",
     "St.Andrew",
     "Portland",
@@ -240,14 +239,12 @@ class _BusinessFormState extends State<BusinessForm> {
                     isExpanded: true,
                     style: TextStyle(color: kActiveCardColour, fontSize: 15.0),
                     value: parish,
-                    items: parishList
-                        .map(
-                          (label) => DropdownMenuItem(
-                            child: Text(label),
-                            value: label,
-                          ),
-                        )
-                        .toList(),
+                    items: ParishList.map(
+                      (label) => DropdownMenuItem(
+                        child: Text(label),
+                        value: label,
+                      ),
+                    ).toList(),
                     onChanged: (value) {
                       setState(() => parish = value);
                     },
@@ -284,9 +281,8 @@ class _BusinessFormState extends State<BusinessForm> {
                           style:
                               TextStyle(fontSize: 16, color: kActiveCardColour),
                         ),
-                        // ignore: missing_return
                         validator: (value) {
-                          assert(value != null);
+// ignore: unnecessary_statements
                           if (value == null || value.length == 0) {
                             return "Please select one or more options";
                           }
