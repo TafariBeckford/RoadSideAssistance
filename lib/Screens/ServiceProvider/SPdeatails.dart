@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 class DetailsView extends StatefulWidget {
   final DocumentSnapshot post;
-
   DetailsView({this.post});
-
   @override
   _DetailsViewState createState() => _DetailsViewState();
 }
@@ -19,14 +17,15 @@ class _DetailsViewState extends State<DetailsView> {
           Stack(
             children: <Widget>[
               Container(
-                  padding: EdgeInsets.only(left: 10.0),
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new AssetImage("drive-steering-wheel.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                padding: EdgeInsets.only(left: 10.0),
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new AssetImage("drive-steering-wheel.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
                 padding: EdgeInsets.all(40.0),
@@ -54,11 +53,9 @@ class _DetailsViewState extends State<DetailsView> {
               color: Theme.of(context).primaryColor,
               padding: EdgeInsets.all(40.0),
               child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Text(widget.post.data()['address']),
-                  ],
-                ),
+                child: Column(children: [
+                  Text(widget.post.data()["parish"]),
+                ]),
               ),
             ),
           ),
