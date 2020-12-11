@@ -7,7 +7,7 @@ import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:RoadSideAssistance/Screens/Dashboard/Home.dart';
+import 'package:RoadSideAssistance/Home.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = '_screen.dart';

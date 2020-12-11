@@ -2,12 +2,14 @@ import 'dart:io';
 import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:RoadSideAssistance/constants.dart';
-import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as Path;
+
+FirebaseAuth auth = FirebaseAuth.instance;
 
 class BusinessForm extends StatefulWidget {
   BusinessForm({Key key}) : super(key: key);
@@ -89,8 +91,6 @@ class _BusinessFormState extends State<BusinessForm> {
 
   @override
   // ignore: override_on_non_overriding_member
-  List _myActivities;
-  String _myActivitiesResult;
   String parish;
   String businessName;
   int phoneNumber;
@@ -113,24 +113,16 @@ class _BusinessFormState extends State<BusinessForm> {
     "Trelawny",
   ];
   final formKey = new GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
-    _myActivities = [];
-    _myActivitiesResult = '';
-  }
 
   Future<void> saveData(File _image, DocumentReference ref) async {
     String imageURL = await uploadFile(_image);
     Map<String, dynamic> spData = {
       "Images": FieldValue.arrayUnion([imageURL]),
       'parish': parish,
-      'businessName': businessName,
       'phoneNumber': phoneNumber,
       'address': address,
-      'services': _myActivities,
     };
-    ref.set(spData);
+    ref.update(spData);
   }
 
   Future<String> uploadFile(File _image) async {
@@ -253,87 +245,6 @@ class _BusinessFormState extends State<BusinessForm> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: size.width * 0.8,
-                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(29.0),
-                  ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      canvasColor: Colors.white,
-                    ),
-                    child: MultiSelectFormField(
-                        fillColor: Colors.white,
-                        autovalidate: false,
-                        chipBackGroundColor: kActiveCardColour,
-                        chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-                        dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
-                        checkBoxActiveColor: kActiveCardColour,
-                        checkBoxCheckColor: Colors.white,
-                        dialogShapeBorder: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0))),
-                        title: Text(
-                          "Select Services Offered",
-                          style:
-                              TextStyle(fontSize: 16, color: kActiveCardColour),
-                        ),
-                        // ignore: missing_return
-                        validator: (value) {
-                          if (value == null || value.length == 0) {
-                            return "Please select one or more options";
-                          }
-                        },
-                        dataSource: [
-                          {
-                            "display": "Towing",
-                            "value": "Towing",
-                          },
-                          {
-                            "display": "Dead Battery",
-                            "value": "Dead Battery",
-                          },
-                          {
-                            "display": "Engine Oil",
-                            "value": "Engine Oil",
-                          },
-                          {
-                            "display": "Flat Tyre",
-                            "value": "Flat Tyre",
-                          },
-                          {
-                            "display": "Low Fuel",
-                            "value": "Low Fuel",
-                          },
-                          {
-                            "display": "Breakdown",
-                            "value": "Breakdown",
-                          },
-                        ],
-                        textField: 'display',
-                        valueField: 'value',
-                        okButtonLabel: 'OK',
-                        cancelButtonLabel: 'CANCEL',
-                        hintWidget: Text(
-                          'Please choose one or more',
-                          style: TextStyle(color: kActiveCardColour),
-                        ),
-                        initialValue: _myActivities,
-                        onSaved: (value) {
-                          _myActivities = value;
-                        }),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Text(_myActivitiesResult),
-              ),
               RoundedButton(
                 text: 'SUBMIT',
                 Onpressed: () {
@@ -345,5 +256,6 @@ class _BusinessFormState extends State<BusinessForm> {
         ),
       ),
     );
+    
   }
 }

@@ -1,9 +1,10 @@
+import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
 
 //Top App Bar
 final topAppBar = AppBar(
   elevation: 0.1,
-  backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+  backgroundColor: kActiveCardColour,
   title: Text('Service Provider'),
   actions: <Widget>[
     IconButton(
@@ -18,7 +19,7 @@ final topAppBar = AppBar(
 final Bottombar = Container(
   height: 55.0,
   child: BottomAppBar(
-    color: Color.fromRGBO(58, 66, 86, 1.0),
+    color: kActiveCardColour,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[

@@ -14,6 +14,8 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  Future _data;
+
   Future getPost() async {
     var firestore = FirebaseFirestore.instance;
     QuerySnapshot qn = await firestore.collection("serviceprovider").get();
@@ -30,11 +32,17 @@ class _ListPageState extends State<ListPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _data = getPost();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topAppBar,
       body: FutureBuilder(
-        future: getPost(),
+        future: _data,
         builder: (_, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -76,7 +84,7 @@ class _ListPageState extends State<ListPage> {
                         ),
                       ),
                       title: Text(
-                        snapshot.data[index].data()['busninessName'],
+                        snapshot.data[index].data()['businessName'],
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -84,7 +92,8 @@ class _ListPageState extends State<ListPage> {
 
                       subtitle: Row(
                         children: <Widget>[
-                          Icon(Icons.linear_scale, color: Colors.yellowAccent),
+                          Icon(Icons.linear_scale,
+                              color: Colors.yellowAccent),
                           Text(
                             snapshot.data[index].data()['address'],
                             style: TextStyle(color: Colors.white),

@@ -1,8 +1,11 @@
 import 'package:RoadSideAssistance/Screens/ServiceProvider/SPlist.dart';
 import 'package:RoadSideAssistance/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:RoadSideAssistance/components/ReusableCard.dart';
 import 'package:foldable_sidebar/foldable_sidebar.dart';
+
+FirebaseAuth auth = FirebaseAuth.instance;
 
 class CustomerDashboard extends StatefulWidget {
   @override
@@ -250,7 +253,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              debugPrint("Tapped Log Out");
+              _signOut();
             },
             leading: Icon(Icons.exit_to_app),
             title: Text("Log Out"),
@@ -258,5 +261,9 @@ class CustomDrawer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _signOut() async {
+    await auth.signOut();
   }
 }
