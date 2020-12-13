@@ -8,6 +8,7 @@ import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:RoadSideAssistance/Home.dart';
+import 'package:RoadSideAssistance/components/loader.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = '_screen.dart';
@@ -19,10 +20,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email;
   String password;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return isLoading ? Loading():Scaffold(
       body: Background(
         child: SingleChildScrollView(
           child: Form(
@@ -89,16 +91,26 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void formLogin() async {
-    try {
-      User user = (await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: email, password: password))
-          .user;
-      if (user != null) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => RoleRouting(user: user)));
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        User user = (await FirebaseAuth.instance
+                .signInWithEmailAndPassword(email: email, password: password))
+            .user;
+        if (user != null) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => RoleRouting(user: user)));
+        } else {
+          setState(() {
+            isLoading = false;
+            return LoginScreen();
+          });
+        }
+      } catch (e) {
+        print(e);
       }
-    } catch (e) {
-      print(e);
     }
   }
 }

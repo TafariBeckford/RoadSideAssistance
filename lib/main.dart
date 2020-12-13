@@ -1,4 +1,5 @@
 import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
+import 'package:RoadSideAssistance/Screens/ServiceProvider/Payment.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         hintColor: kActiveCardColour,
         scaffoldBackgroundColor: Color(0xFF0A0E21),
       ),
-      home: LoginScreen(),
+      home: Payment(),
     );
   }
 }

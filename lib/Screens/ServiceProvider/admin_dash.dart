@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/Screens/ServiceProvider/business_form.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -214,6 +215,14 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               _signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return LoginScreen();
+                  },
+                ),
+              );
             },
             leading: Icon(Icons.exit_to_app),
             title: Text("Log Out"),
