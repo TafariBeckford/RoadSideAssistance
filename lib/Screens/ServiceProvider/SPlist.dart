@@ -115,7 +115,7 @@ class _ListPageState extends State<ListPage> {
           );
         },
       ),
-      bottomNavigationBar: Bottombar,
+      
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/Screens/ServiceProvider/Payment.dart';
 import 'package:RoadSideAssistance/components/bottom_button.dart';
 import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/constants.dart';
@@ -5,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stripe_payment/stripe_payment.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:RoadSideAssistance/Model/payment-service.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -140,6 +141,14 @@ class _DetailsViewState extends State<DetailsView> {
                         ),
                       ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(icon: Icon(Icons.message), onPressed: () {}),
+                        IconButton(
+                            icon: Icon(Icons.rate_review), onPressed: () {})
+                      ],
+                    ),
                     Text("Rate Service"),
                     SizedBox(
                       height: 15.0,
@@ -179,7 +188,13 @@ class _DetailsViewState extends State<DetailsView> {
               ),
             ),
           ),
-          BottomButton(onTap: () {}, buttonTitle: 'BOOK')
+          BottomButton(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Payment();
+                }));
+              },
+              buttonTitle: 'REQUEST SERVICE')
         ],
       ),
     );

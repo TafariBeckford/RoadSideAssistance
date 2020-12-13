@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/Screens/ServiceProvider/SPlist.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,115 +59,117 @@ class OptionGrid extends StatefulWidget {
 class _OptionGridState extends State<OptionGrid> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => ListPage()));
-                  },
-                  child: ReusableCard(
-                    colour: kActiveCardColour,
-                    cardChild: Tab(
-                      icon: Image.asset("assets/icons/flat-tire.png"),
-                      text: 'Flat Tyre',
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => ListPage()));
+                    },
+                    child: ReusableCard(
+                      colour: kActiveCardColour,
+                      cardChild: Tab(
+                        icon: Image.asset("assets/icons/flat-tire.png"),
+                        text: 'Flat Tyre',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(),
-              Expanded(
-                child: InkWell(
-                  // borderRadius: ,
-                  onTap: () {
-                    print('it was tapped');
-                  },
-                  child: ReusableCard(
-                    colour: kActiveCardColour,
-                    cardChild: Tab(
-                      icon: Image.asset("assets/icons/tow-truck.png"),
-                      text: 'Towing',
+                SizedBox(),
+                Expanded(
+                  child: InkWell(
+                    // borderRadius: ,
+                    onTap: () {
+                      print('it was tapped');
+                    },
+                    child: ReusableCard(
+                      colour: kActiveCardColour,
+                      cardChild: Tab(
+                        icon: Image.asset("assets/icons/tow-truck.png"),
+                        text: 'Towing',
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    print('it was tapped');
-                  },
-                  child: ReusableCard(
-                    cardChild: Tab(
-                      icon: Image.asset("assets/icons/car-battery.png"),
-                      text: 'Dead Battery',
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      print('it was tapped');
+                    },
+                    child: ReusableCard(
+                      cardChild: Tab(
+                        icon: Image.asset("assets/icons/car-battery.png"),
+                        text: 'Dead Battery',
+                      ),
+                      colour: kActiveCardColour,
                     ),
-                    colour: kActiveCardColour,
                   ),
                 ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    print('it was tapped');
-                  },
-                  child: ReusableCard(
-                    cardChild: Tab(
-                      icon: Image.asset("assets/icons/engine-oil.png"),
-                      text: 'Engine Oil',
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      print('it was tapped');
+                    },
+                    child: ReusableCard(
+                      cardChild: Tab(
+                        icon: Image.asset("assets/icons/engine-oil.png"),
+                        text: 'Engine Oil',
+                      ),
+                      colour: kActiveCardColour,
                     ),
-                    colour: kActiveCardColour,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    print('it was tapped');
-                  },
-                  child: ReusableCard(
-                    cardChild: Tab(
-                      icon: Image.asset("assets/icons/gas-pump.png"),
-                      text: 'Low Fuel',
-                    ),
-                    colour: kActiveCardColour,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    print('it was tapped');
-                  },
-                  child: ReusableCard(
-                    colour: kActiveCardColour,
-                    cardChild: Tab(
-                      icon: Image.asset("assets/icons/car-service.png"),
-                      text: 'Breakdown',
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      print('it was tapped');
+                    },
+                    child: ReusableCard(
+                      cardChild: Tab(
+                        icon: Image.asset("assets/icons/gas-pump.png"),
+                        text: 'Low Fuel',
+                      ),
+                      colour: kActiveCardColour,
                     ),
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      print('it was tapped');
+                    },
+                    child: ReusableCard(
+                      colour: kActiveCardColour,
+                      cardChild: Tab(
+                        icon: Image.asset("assets/icons/car-service.png"),
+                        text: 'Breakdown',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -254,6 +257,14 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               _signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return LoginScreen();
+                  },
+                ),
+              );
             },
             leading: Icon(Icons.exit_to_app),
             title: Text("Log Out"),

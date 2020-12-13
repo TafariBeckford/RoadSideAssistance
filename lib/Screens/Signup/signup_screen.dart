@@ -8,6 +8,7 @@ import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:RoadSideAssistance/Model/Data.dart';
+import 'package:RoadSideAssistance/components/loader.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'signup_screen.dart';
@@ -24,175 +25,183 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String fullname;
   String role;
   String gender;
-
+  bool isLoading = false;
   bool showSpinner = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: Background(
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "SIGNUP",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: size.height * 0.03),
-              /*  SvgPicture.asset(
+    return isLoading
+        ? Loading()
+        : Scaffold(
+            body: Background(
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "SIGNUP",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: size.height * 0.03),
+                    /*  SvgPicture.asset(
                 "assets/icons/",
                 height: size.height * 0.35,
               ), */
-              RoundedInputField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Provide your full name';
-                  }
-                },
-                hintText: "Your Full Name",
-                onChanged: (value) {
-                  fullname = value;
-                },
-              ),
-              RoundedInputField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Provide an email';
-                  }
-                },
-                hintText: "Your Email",
-                onChanged: (value) {
-                  email = value;
-                },
-              ),
-              RoundedPasswordField(
-                validator: (input) {
-                  if (input.length < 6) {
-                    return 'Longer password please';
-                  }
-                },
-                onChanged: (value) {
-                  password = value;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: size.width * 0.8,
-                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(29.0),
-                  ),
-                  child: DropdownButtonFormField(
-                    icon: Icon(Icons.arrow_drop_down),
-                    decoration: InputDecoration(
-                      labelText: 'Select Role',
-                      icon: Icon(
-                        Icons.person_pin_circle,
-                        color: kActiveCardColour,
-                      ),
-                    ),
-                    elevation: 5,
-                    isExpanded: true,
-                    style: TextStyle(color: kActiveCardColour, fontSize: 15.0),
-                    value: role,
-                    items: ["Customer", "Service Provider"]
-                        .map(
-                          (label) => DropdownMenuItem(
-                            child: Text(label),
-                            value: label,
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() => role = value);
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: size.width * 0.8,
-                  padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(29.0),
-                  ),
-                  child: DropdownButtonFormField(
-                    icon: Icon(Icons.arrow_drop_down),
-                    decoration: InputDecoration(
-                      labelText: 'Select Gender',
-                      icon: Icon(
-                        Icons.person_pin_circle,
-                        color: kActiveCardColour,
-                      ),
-                    ),
-                    elevation: 5,
-                    isExpanded: true,
-                    style: TextStyle(fontSize: 15.0, color: kActiveCardColour),
-                    value: gender,
-                    items: ["Male", "Female"]
-                        .map(
-                          (label) => DropdownMenuItem(
-                            child: Text(label),
-                            value: label,
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() => gender = value);
-                    },
-                  ),
-                ),
-              ),
-              RoundedButton(
-                text: "SIGNUP",
-                Onpressed: () async {
-                  final FormState form = _formKey.currentState;
-                  if (form.validate()) {
-                    print('Form is valid');
-                  } else {
-                    print('Form is invalid');
-                  }
-                  try {
-                    // ignore: non_constant_identifier_names
-                    final NewUser = await _auth.createUserWithEmailAndPassword(
-                        email: email, password: password);
-                    User user = NewUser.user;
-                    await Data(uid: user.uid).userData(fullname, role, gender);
-                    if (NewUser != null) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-                },
-              ),
-              SizedBox(height: size.height * 0.03),
-              AlreadyHaveAnAccountCheck(
-                login: false,
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return LoginScreen();
+                    RoundedInputField(
+                      validator: (input) {
+                        if (input.isEmpty) {
+                          return 'Provide your full name';
+                        }
+                      },
+                      hintText: "Your Full Name",
+                      onChanged: (value) {
+                        fullname = value;
                       },
                     ),
-                  );
-                },
-              ),
-              /*  OrDivider(),
+                    RoundedInputField(
+                      validator: (input) {
+                        if (input.isEmpty) {
+                          return 'Provide an email';
+                        }
+                      },
+                      hintText: "Your Email",
+                      onChanged: (value) {
+                        email = value;
+                      },
+                    ),
+                    RoundedPasswordField(
+                      validator: (input) {
+                        if (input.length < 6) {
+                          return 'Longer password please';
+                        }
+                      },
+                      onChanged: (value) {
+                        password = value;
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: size.width * 0.8,
+                        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(29.0),
+                        ),
+                        child: DropdownButtonFormField(
+                          icon: Icon(Icons.arrow_drop_down),
+                          decoration: InputDecoration(
+                            labelText: 'Select Role',
+                            icon: Icon(
+                              Icons.person_pin_circle,
+                              color: kActiveCardColour,
+                            ),
+                          ),
+                          elevation: 5,
+                          isExpanded: true,
+                          style: TextStyle(
+                              color: kActiveCardColour, fontSize: 15.0),
+                          value: role,
+                          items: ["Customer", "Service Provider"]
+                              .map(
+                                (label) => DropdownMenuItem(
+                                  child: Text(label),
+                                  value: label,
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() => role = value);
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: size.width * 0.8,
+                        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(29.0),
+                        ),
+                        child: DropdownButtonFormField(
+                          icon: Icon(Icons.arrow_drop_down),
+                          decoration: InputDecoration(
+                            labelText: 'Select Gender',
+                            icon: Icon(
+                              Icons.person_pin_circle,
+                              color: kActiveCardColour,
+                            ),
+                          ),
+                          elevation: 5,
+                          isExpanded: true,
+                          style: TextStyle(
+                              fontSize: 15.0, color: kActiveCardColour),
+                          value: gender,
+                          items: ["Male", "Female"]
+                              .map(
+                                (label) => DropdownMenuItem(
+                                  child: Text(label),
+                                  value: label,
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() => gender = value);
+                          },
+                        ),
+                      ),
+                    ),
+                    RoundedButton(
+                      text: "SIGNUP",
+                      Onpressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          // ignore: non_constant_identifier_names
+                          setState(() {
+                            isLoading = true;
+                          });
+                          dynamic NewUser =
+                              await _auth.createUserWithEmailAndPassword(
+                                  email: email, password: password);
+                          User user = NewUser.user;
+                          await Data(uid: user.uid)
+                              .userData(fullname, role, gender);
+                          if (NewUser != null) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              ),
+                            );
+                          }
+                        } else {
+                          print('Form is invalid');
+                        }
+                      },
+                    ),
+                    SizedBox(height: size.height * 0.03),
+                    AlreadyHaveAnAccountCheck(
+                      login: false,
+                      press: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return LoginScreen();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    /*  OrDivider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -210,10 +219,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ],
               ) */
-            ],
-          ),
-        ),
-      ),
-    ));
+                  ],
+                ),
+              ),
+            ),
+          ));
   }
 }

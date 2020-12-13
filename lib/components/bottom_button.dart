@@ -10,17 +10,15 @@ class BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        
-      },
-          child: Container(
+      onTap: onTap,
+      child: Container(
         child: Center(
           child: Text(
             buttonTitle,
             style: kLargeButtonTextStyle,
           ),
         ),
-        color: kInActiveColour,
+        color: Color(0xFF0A0E21),
         // margin: EdgeInsets.only(top: 10.0),
         padding: EdgeInsets.only(bottom: 20.0),
         width: double.infinity,
