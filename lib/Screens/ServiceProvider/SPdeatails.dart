@@ -1,4 +1,5 @@
 import 'package:RoadSideAssistance/Screens/ServiceProvider/Payment.dart';
+import 'package:RoadSideAssistance/Service/payment-service.dart';
 import 'package:RoadSideAssistance/components/bottom_button.dart';
 import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/constants.dart';
@@ -6,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stripe_payment/stripe_payment.dart';
-import 'package:RoadSideAssistance/Model/payment-service.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -24,23 +24,18 @@ class _DetailsViewState extends State<DetailsView> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  PaymentMethod _paymentMethod;
-  @override
-  void initState() {
-    super.initState();
-    StripePayment.setOptions(StripeOptions(
-        publishableKey:
-            "pk_test_51HwD51B2rziuvnB3KSvE4pwesHNGTCPJRvKHYRrLR7idiNqfH9QEl4O2DTh5HjgGO2W8XgkJGN6AeNlBtVS5qLPI00dV4uHJeN",
-        merchantId: "Test",
-        androidPayMode: 'test'));
-  }
-
   void setError(dynamic error) {
     _scaffoldKey.currentState
         .showSnackBar(SnackBar(content: Text(error.toString())));
     setState(() {
       _error = error.toString();
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    StripeService.init();
   }
 
   @override
@@ -189,17 +184,24 @@ class _DetailsViewState extends State<DetailsView> {
             ),
           ),
           BottomButton(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Payment();
-                }));
-              },
-              buttonTitle: 'REQUEST SERVICE')
+            buttonTitle: 'Book',
+            onTap: () {},
+          ),
         ],
       ),
     );
   }
 }
+
+/* payViaNewCard(BuildContext context) async {
+  var response =
+      await StripeService.payWithNewCard(amount: '15000', currency: 'USD');
+  Scaffold.of(context).showSnackBar(SnackBar(
+    content: Text(response.message),
+    duration:
+        new Duration(milliseconds: response.success == true ? 1200 : 3000),
+  ));
+} */
 
 _openPopup(context) {
   showDialog(

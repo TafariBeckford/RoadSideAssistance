@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         hintColor: kActiveCardColour,
         scaffoldBackgroundColor: Color(0xFF0A0E21),
       ),
-      home: Payment(),
+      home: LoginScreen(),
     );
   }
 }

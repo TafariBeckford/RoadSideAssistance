@@ -7,7 +7,7 @@ import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:RoadSideAssistance/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:RoadSideAssistance/Model/Data.dart';
+import 'package:RoadSideAssistance/Service/Data.dart';
 import 'package:RoadSideAssistance/components/loader.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -165,6 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           setState(() {
                             isLoading = true;
                           });
+                          // ignore: non_constant_identifier_names
                           dynamic NewUser =
                               await _auth.createUserWithEmailAndPassword(
                                   email: email, password: password);
