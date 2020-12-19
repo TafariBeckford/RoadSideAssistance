@@ -1,28 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:RoadSideAssistance/Service/payment.dart';
-import 'package:RoadSideAssistance/Service/payment-service.dart';
+import 'package:RoadSideAssistance/Payment/payment.dart';
+import 'package:RoadSideAssistance/Payment/payment-service.dart';
 import 'package:dio/dio.dart';
-
-
 
 class Server {
   Future<String> createCheckout() async {
     Item item = new Item();
     item.price = StripeService.priceId;
-   
-    String sKey = StripeService.secret;
+    item.quantity = 1;
 
+    String sKey = StripeService.secret;
 
     List<Item> listItem = new List<Item>();
     listItem.add(item);
-
 
     final jsonList = listItem;
 
     final json = jsonEncode(jsonList, toEncodable: (e) => item.toJson());
     print("This: " + json);
-
 
     final auth = 'Basic ' + base64Encode(utf8.encode('$sKey:'));
     final body = {
