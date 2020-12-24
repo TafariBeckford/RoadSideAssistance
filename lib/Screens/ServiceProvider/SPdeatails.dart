@@ -1,12 +1,11 @@
-import 'package:RoadSideAssistance/Payment/Checkout.dart';
-import 'package:RoadSideAssistance/Payment/pay.dart';
-import 'package:RoadSideAssistance/Payment/payment-service.dart';
+import 'package:RoadSideAssistance/Service/payment-service.dart';
 import 'package:RoadSideAssistance/components/bottom_button.dart';
 import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -125,18 +124,6 @@ class _DetailsViewState extends State<DetailsView> {
                 child: Center(
                   child: Column(
                     children: [
-                      Text('Services Offered'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Chip(
-                            label: Text(widget.post.data()["services"][0]),
-                            labelStyle: TextStyle(
-                                color: kActiveCardColour,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -189,13 +176,9 @@ class _DetailsViewState extends State<DetailsView> {
             ),
             BottomButton(
               buttonTitle: 'BOOK',
-              onTap: () async {
-                final sessionId = await Server().createCheckout();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            CheckoutPage(sessionId: sessionId)));
+              onTap: () {
+                _showPicker(context);
+             
               },
             ),
           ],
@@ -205,6 +188,63 @@ class _DetailsViewState extends State<DetailsView> {
   }
 }
 
+//Payment Options BottomSheet
+void _showPicker(context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(
+                      Icons.add_circle,
+                      color: kActiveCardColour,
+                    ),
+                    title: new Text(
+                      'Pay via new card',
+                      style: TextStyle(color: kActiveCardColour),
+                    ),
+                    onTap: () {
+                      payViaNewCard(context);
+                    }),
+                new ListTile(
+                  leading: new Icon(
+                    Icons.credit_card,
+                    color: kActiveCardColour,
+                  ),
+                  title: new Text(
+                    'Pay via existing card',
+                    style: TextStyle(color: kActiveCardColour),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/existing-cards');
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+// Make Payment Via New Card
+payViaNewCard(BuildContext context) async {
+  ProgressDialog dialog = new ProgressDialog(context);
+  dialog.style(message: 'Please wait...');
+  await dialog.show();
+  var response =
+      await StripeService.payWithNewCard(amount: '15000', currency: 'USD');
+  await dialog.hide();
+  Scaffold.of(context).showSnackBar(SnackBar(
+    content: Text(response.message),
+    duration:
+        new Duration(milliseconds: response.success == true ? 1200 : 3000),
+  ));
+}
+
+// Comments Pop-Up Box
 _openPopup(context) {
   showDialog(
       context: context,

@@ -8,6 +8,11 @@ class Open extends StatefulWidget {
 class _OpenState extends State<Open> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return StreamBuilder<Object>(
+      stream: null,
+      builder: (context, snapshot) {
+        return Container();
+      }
+    );
   }
 }

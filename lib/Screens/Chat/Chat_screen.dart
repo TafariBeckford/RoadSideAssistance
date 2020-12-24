@@ -1,4 +1,4 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -69,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         //Do something with the user input.
                         messageText = value;
                       },
-                    //  decoration: kMessageTextFieldDecoration,
+                      //  decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
@@ -83,7 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     },
                     child: Text(
                       'Send',
-                    //  style: kSendButtonTextStyle,
+                      //  style: kSendButtonTextStyle,
                     ),
                   ),
                 ],
@@ -184,4 +184,3 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
- */

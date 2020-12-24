@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:RoadSideAssistance/components/list_components.dart';
 
-import 'SPdeatails.dart';
+import '../SPdeatails.dart';
 
-class ListPage extends StatefulWidget {
-  ListPage({Key key, this.title}) : super(key: key);
+class TowTruckListPage extends StatefulWidget {
+  TowTruckListPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _ListPageState createState() => _ListPageState();
+  _TowTruckListPageState createState() => _TowTruckListPageState();
 }
 
-class _ListPageState extends State<ListPage> {
+class _TowTruckListPageState extends State<TowTruckListPage> {
   Future _data;
 
   Future getPost() async {
