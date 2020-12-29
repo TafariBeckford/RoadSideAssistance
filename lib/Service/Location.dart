@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -40,7 +41,8 @@ class _DashboardState extends State<DashboardScreen> {
 
       setState(() {
         _currentAddress =
-            "${place.locality}, ${place.postalCode}, ${place.country}";
+            "${place.locality}, ${place.name}, ${place.subThoroughfare}";
+        print(_currentAddress);
       });
     } catch (e) {
       print(e);
@@ -81,8 +83,7 @@ class _DashboardState extends State<DashboardScreen> {
                               if (_currentPosition != null &&
                                   _currentAddress != null)
                                 Text(_currentAddress,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2),
+                                    style: TextStyle(color: kActiveCardColour)),
                             ],
                           ),
                         ),

@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/Service/Booking.dart';
 import 'package:RoadSideAssistance/Service/payment-service.dart';
 import 'package:RoadSideAssistance/components/bottom_button.dart';
 import 'package:RoadSideAssistance/components/rounded_button.dart';
@@ -178,7 +179,6 @@ class _DetailsViewState extends State<DetailsView> {
               buttonTitle: 'BOOK',
               onTap: () {
                 _showPicker(context);
-             
               },
             ),
           ],

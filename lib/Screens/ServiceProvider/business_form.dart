@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:RoadSideAssistance/Service/Booking.dart';
 import 'package:RoadSideAssistance/components/rounded_button.dart';
 import 'package:RoadSideAssistance/components/rounded_input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:RoadSideAssistance/constants.dart';
@@ -9,6 +11,8 @@ import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as Path;
 
+User user = FirebaseAuth.instance.currentUser;
+final _inputController = TextEditingController();
 class BusinessForm extends StatefulWidget {
   BusinessForm({Key key}) : super(key: key);
 
@@ -93,7 +97,7 @@ class _BusinessFormState extends State<BusinessForm> {
   String _myActivitiesResult;
   String parish;
   String businessName;
-  int phoneNumber;
+  String phoneNumber;
   String address;
 
   List<String> parishList = [
@@ -126,9 +130,10 @@ class _BusinessFormState extends State<BusinessForm> {
       "Images": FieldValue.arrayUnion([imageURL]),
       'parish': parish,
       'businessName': businessName,
-      'phoneNumber': phoneNumber,
+      'phoneNumber': int.parse(this.phoneNumber),
       'address': address,
       'services': _myActivities,
+      'userId': user.uid,
     };
     ref.set(spData);
   }
@@ -192,7 +197,9 @@ class _BusinessFormState extends State<BusinessForm> {
                 ),
               ),
               RoundedInputField(
+                
                 hintText: 'Business Name',
+              
                 icon: Icons.business,
                 keyboardType: TextInputType.text,
                 onChanged: (value) {

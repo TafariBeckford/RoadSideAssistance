@@ -25,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String fullname;
   String role;
   String gender;
+  String userId;
   bool isLoading = false;
   bool showSpinner = false;
   @override
@@ -171,7 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   email: email, password: password);
                           User user = NewUser.user;
                           await Data(uid: user.uid)
-                              .userData(fullname, role, gender);
+                              .userData(fullname, role, gender, userId);
                           if (NewUser != null) {
                             setState(() {
                               isLoading = false;

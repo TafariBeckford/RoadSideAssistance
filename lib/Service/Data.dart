@@ -6,8 +6,9 @@ class Data {
   // ignore: non_constant_identifier_names
   final CollectionReference UserCollection =
       FirebaseFirestore.instance.collection('users');
-  Future userData(String fullname, String role, String gender) async {
-    return await UserCollection.doc(uid)
-        .set({'fullname': fullname, 'role': role, 'gender': gender});
+  Future userData(
+      String fullname, String role, String gender, String userId) async {
+    return await UserCollection.doc(uid).set(
+        {'fullname': fullname, 'role': role, 'gender': gender, 'userId': uid});
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:RoadSideAssistance/Service/Booking.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,11 +39,13 @@ class StripeService {
           clientSecret: paymentIntent['client_secret'],
           paymentMethodId: paymentMethod.id));
       if (response.status == 'succeeded') {
+        //Book Serivce
+         addBooking();
         return new StripeTransactionResponse(
             message: 'Transaction successful', success: true);
       } else {
         return new StripeTransactionResponse(
-            message: 'Transaction failed', success: false);
+            message: 'Transaction failed...Try again', success: false);
       }
     } on PlatformException catch (err) {
       return StripeService.getPlatformExceptionErrorResult(err);
@@ -63,6 +66,8 @@ class StripeService {
           clientSecret: paymentIntent['client_secret'],
           paymentMethodId: paymentMethod.id));
       if (response.status == 'succeeded') {
+          //Book Serivce
+         addBooking();
         return new StripeTransactionResponse(
             message: 'Transaction successful', success: true);
       } else {

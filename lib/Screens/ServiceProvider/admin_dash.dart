@@ -1,5 +1,8 @@
 import 'package:RoadSideAssistance/Screens/Login/login_screen.dart';
 import 'package:RoadSideAssistance/Screens/ServiceProvider/business_form.dart';
+import 'package:RoadSideAssistance/Screens/ServiceProvider/completed.dart';
+import 'package:RoadSideAssistance/Screens/ServiceProvider/open.dart';
+import 'package:RoadSideAssistance/Screens/ServiceProvider/pending.dart';
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -110,11 +113,7 @@ class _ThreeTabState extends State<ThreeTab> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: TabBarView(children: [
-          Icon(Icons.lock_open),
-          Icon(Icons.hourglass_empty),
-          Icon(Icons.lock),
-        ]),
+        body: TabBarView(children: [Open(), Pending(), Completed()]),
       ),
     );
   }
