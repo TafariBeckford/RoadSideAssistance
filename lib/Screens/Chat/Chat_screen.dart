@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +8,6 @@ final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
 
 class ChatScreen extends StatefulWidget {
-  static String id = 'chat_screen';
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -48,8 +48,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 Navigator.pop(context);
               }),
         ],
-        title: Text('⚡️Chat'),
-        backgroundColor: Colors.lightBlueAccent,
+        title: Text('Chat'),
+        backgroundColor: kActiveCardColour,
       ),
       body: SafeArea(
         child: Column(
@@ -69,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         //Do something with the user input.
                         messageText = value;
                       },
-                      //  decoration: kMessageTextFieldDecoration,
+                      decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
@@ -154,7 +154,7 @@ class MessageBubble extends StatelessWidget {
         children: [
           Text(
             sender,
-            style: TextStyle(fontSize: 12.0, color: Colors.black54),
+            style: TextStyle(fontSize: 12.0, color: Colors.white),
           ),
           Material(
             elevation: 5.0,
@@ -167,7 +167,7 @@ class MessageBubble extends StatelessWidget {
                     topRight: Radius.circular(30.0),
                     bottomLeft: Radius.circular(30.0),
                     bottomRight: Radius.circular(30.0)),
-            color: isMe ? Colors.lightBlueAccent : Colors.white,
+            color: isMe ? Colors.white : Colors.white,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -175,7 +175,7 @@ class MessageBubble extends StatelessWidget {
                 text,
                 style: TextStyle(
                     fontSize: 15.0,
-                    color: isMe ? Colors.white : Colors.black54),
+                    color: isMe ? kActiveCardColour : kActiveCardColour),
               ),
             ),
           ),

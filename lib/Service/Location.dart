@@ -50,53 +50,5 @@ class _DashboardState extends State<DashboardScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("DASHBOARD"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor,
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(Icons.location_on),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Location',
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                              if (_currentPosition != null &&
-                                  _currentAddress != null)
-                                Text(_currentAddress,
-                                    style: TextStyle(color: kActiveCardColour)),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                      ],
-                    ),
-                  ],
-                ))
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) {}
 }

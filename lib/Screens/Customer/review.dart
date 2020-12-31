@@ -1,19 +1,18 @@
 import 'package:RoadSideAssistance/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:RoadSideAssistance/Service/Location.dart';
 
-class Pending extends StatefulWidget {
+class UserReview extends StatefulWidget {
   @override
-  _PendingState createState() => _PendingState();
+  _UserReviewState createState() => _UserReviewState();
 }
 
-class _PendingState extends State<Pending> {
+class _UserReviewState extends State<UserReview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('bookings').snapshots(),
+        stream: FirebaseFirestore.instance.collection('users').snapshots(),
         builder: (context, userSnapshot) {
           return userSnapshot.hasData
               ? ListView.builder(
@@ -33,21 +32,25 @@ class _PendingState extends State<Pending> {
                               horizontal: 20.0, vertical: 10.0),
                           leading: Container(
                             padding: EdgeInsets.only(right: 12.0),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    right: BorderSide(
+                            decoration: new BoxDecoration(
+                                border: new Border(
+                                    right: new BorderSide(
                                         width: 1.0, color: Colors.white24))),
                             child: Icon(Icons.autorenew, color: Colors.white),
                           ),
                           title: Text(
-                            bookingData.data()['Customer Info'],
+                            'hi',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
+                          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
                           subtitle: Row(
                             children: <Widget>[
-                              Text(bookingData.data()['Status'],
+                              Icon(Icons.linear_scale,
+                                  color: Colors.yellowAccent),
+                              Text(" Intermediate",
                                   style: TextStyle(color: Colors.white))
                             ],
                           ),

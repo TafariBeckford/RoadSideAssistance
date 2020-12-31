@@ -1,3 +1,4 @@
+import 'package:RoadSideAssistance/Screens/Chat/Chat_screen.dart';
 import 'package:RoadSideAssistance/Service/Booking.dart';
 import 'package:RoadSideAssistance/Service/payment-service.dart';
 import 'package:RoadSideAssistance/components/bottom_button.dart';
@@ -99,7 +100,7 @@ class _DetailsViewState extends State<DetailsView> {
                                 style: TextStyle(fontSize: 16.5)),
                           ],
                         ),
-                        Text(widget.post.data()["businessName"]),
+                        Text(widget.post.data()["phoneNumber"].toString()),
                       ],
                     ),
                   ),
@@ -130,7 +131,14 @@ class _DetailsViewState extends State<DetailsView> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             IconButton(
-                                icon: Icon(Icons.message), onPressed: () {}),
+                                icon: Icon(Icons.message),
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatScreen(),
+                                      ));
+                                }),
                             IconButton(
                                 icon: Icon(Icons.rate_review), onPressed: () {})
                           ],

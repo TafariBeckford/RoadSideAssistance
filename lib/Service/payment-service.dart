@@ -40,7 +40,7 @@ class StripeService {
           paymentMethodId: paymentMethod.id));
       if (response.status == 'succeeded') {
         //Book Serivce
-         addBooking();
+          addBooking();
         return new StripeTransactionResponse(
             message: 'Transaction successful', success: true);
       } else {

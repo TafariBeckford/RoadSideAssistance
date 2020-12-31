@@ -13,6 +13,7 @@ import 'package:path/path.dart' as Path;
 
 User user = FirebaseAuth.instance.currentUser;
 final _inputController = TextEditingController();
+
 class BusinessForm extends StatefulWidget {
   BusinessForm({Key key}) : super(key: key);
 
@@ -92,12 +93,18 @@ class _BusinessFormState extends State<BusinessForm> {
   }
 
   @override
+  void dispose() {
+    _inputController.dispose();
+    super.dispose();
+  }
+
+  @override
   // ignore: override_on_non_overriding_member
   List _myActivities;
   String _myActivitiesResult;
   String parish;
   String businessName;
-  String phoneNumber;
+  int phoneNumber;
   String address;
 
   List<String> parishList = [
@@ -130,7 +137,7 @@ class _BusinessFormState extends State<BusinessForm> {
       "Images": FieldValue.arrayUnion([imageURL]),
       'parish': parish,
       'businessName': businessName,
-      'phoneNumber': int.parse(this.phoneNumber),
+      'phoneNumber': phoneNumber,
       'address': address,
       'services': _myActivities,
       'userId': user.uid,
@@ -197,9 +204,8 @@ class _BusinessFormState extends State<BusinessForm> {
                 ),
               ),
               RoundedInputField(
-                
+                controller: _inputController,
                 hintText: 'Business Name',
-              
                 icon: Icons.business,
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
@@ -207,6 +213,7 @@ class _BusinessFormState extends State<BusinessForm> {
                 },
               ),
               RoundedInputField(
+                controller: _inputController,
                 hintText: 'Telephone Number',
                 icon: Icons.call,
                 keyboardType: TextInputType.number,
@@ -215,6 +222,7 @@ class _BusinessFormState extends State<BusinessForm> {
                 },
               ),
               RoundedInputField(
+                controller: _inputController,
                 hintText: 'Address',
                 icon: Icons.home,
                 keyboardType: TextInputType.streetAddress,

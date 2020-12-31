@@ -182,30 +182,12 @@ class CustomDrawer extends StatelessWidget {
             onTap: () {
               debugPrint("Tapped settings");
             },
-            leading: Icon(Icons.settings),
-            title: Text("Settings"),
+            leading: Icon(Icons.message),
+            title: Text("Chat"),
           ),
           Divider(
             height: 1,
             color: Colors.grey,
-          ),
-          ListTile(
-            onTap: () {
-              debugPrint("Tapped Payments");
-            },
-            leading: Icon(Icons.payment),
-            title: Text("Payments"),
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-          ),
-          ListTile(
-            onTap: () {
-              debugPrint("Tapped Notifications");
-            },
-            leading: Icon(Icons.notifications),
-            title: Text("Notifications"),
           ),
           Divider(
             height: 1,
